@@ -1,0 +1,12 @@
+[Unit]
+Description=Clipboard URL Cleaner
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/clipwipe
+Restart=on-failure
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=default.target

@@ -76,6 +76,49 @@ clipwipe -interval 50ms
 - Cross-platform: Windows, macOS, Linux
 - **Linux/Wayland users**: Requires XWayland. Make sure `DISPLAY` is set or run in an X11 session.
 
+## Autostart
+
+### macOS (launchd)
+
+1. Copy binary to `/usr/local/bin`:
+   ```bash
+   sudo cp $(go env GOPATH)/bin/clipwipe /usr/local/bin/
+   ```
+
+2. Copy plist to LaunchAgents:
+   ```bash
+   cp contrib/clipwipe.plist ~/Library/LaunchAgents/
+   ```
+
+3. Load and start:
+   ```bash
+   launchctl load ~/Library/LaunchAgents/com.github.damirm.clipwipe.plist
+   launchctl start com.github.damirm.clipwipe
+   ```
+
+### Linux (systemd)
+
+1. Copy binary to `/usr/local/bin`:
+   ```bash
+   sudo cp $(go env GOPATH)/bin/clipwipe /usr/local/bin/
+   ```
+
+2. Copy service file:
+   ```bash
+   cp contrib/clipwipe.service ~/.config/systemd/user/
+   ```
+
+3. Enable and start:
+   ```bash
+   systemctl --user daemon-reload
+   systemctl --user enable --now clipwipe.service
+   ```
+
+4. Check status:
+   ```bash
+   systemctl --user status clipwipe.service
+   ```
+
 ## License
 
 MIT
