@@ -74,6 +74,7 @@ clipwipe -interval 50ms
 
 - Go 1.24+
 - Cross-platform: Windows, macOS, Linux
+- **Linux/Wayland users**: Requires XWayland. Make sure `DISPLAY` is set or run in an X11 session.
 
 ## License
 
