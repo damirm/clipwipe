@@ -1,4 +1,4 @@
-module clipwipe
+module github.com/damirm/clipwipe
 
 go 1.24
 
