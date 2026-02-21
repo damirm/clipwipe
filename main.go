@@ -25,12 +25,11 @@ func main() {
 	interval := flag.Duration("interval", 500*time.Millisecond, "clipboard polling interval")
 	debug := flag.Bool("debug", false, "enable debug output")
 	params := flag.String("params", strings.Join(defaultParams, ","), "comma-separated list of query parameters to remove")
+
 	flag.Parse()
 
-	// Parse parameters to remove
 	paramsToIgnore := parseParams(*params)
 
-	// Initialize clipboard
 	if err := clipboard.Init(); err != nil {
 		log.Fatalf("Failed to initialize clipboard: %v", err)
 	}
@@ -43,7 +42,6 @@ func main() {
 	var lastContent string
 
 	for {
-		// Read clipboard content
 		data := clipboard.Read(clipboard.FmtText)
 
 		if *debug {
@@ -52,11 +50,9 @@ func main() {
 
 		if len(data) > 0 {
 			currentContent := string(data)
-			// Check if content has changed
 			if currentContent != lastContent {
 				cleanedURL, ok := removeQueryParams(currentContent, paramsToIgnore)
 				if ok && cleanedURL != currentContent {
-					// Write cleaned URL back to clipboard
 					clipboard.Write(clipboard.FmtText, []byte(cleanedURL))
 					fmt.Printf("Cleaned: %s\n-> %s\n", currentContent, cleanedURL)
 				}
@@ -88,28 +84,23 @@ func parseParams(s string) []string {
 // Returns the cleaned URL and true if the URL was modified.
 // Trims leading/trailing whitespace and newlines from the input.
 func removeQueryParams(rawURL string, paramsToRemove []string) (string, bool) {
-	// Trim whitespace and newlines
 	trimmed := strings.TrimSpace(rawURL)
 	if trimmed == "" {
 		return rawURL, false
 	}
 
-	// Check if string starts with http:// or https://
 	if !strings.HasPrefix(trimmed, "http://") && !strings.HasPrefix(trimmed, "https://") {
 		return rawURL, false
 	}
 
-	// Parse URL
 	parsedURL, err := url.Parse(trimmed)
 	if err != nil {
 		return rawURL, false
 	}
 
-	// Get all query parameters
 	query := parsedURL.Query()
 	modified := false
 
-	// Remove specified parameters
 	for _, param := range paramsToRemove {
 		if query.Has(param) {
 			query.Del(param)
