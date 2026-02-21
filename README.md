@@ -12,6 +12,16 @@ Clipboard URL cleaner - automatically removes UTM parameters and other query par
 
 ## Installation
 
+### Via `go install` (recommended)
+
+```bash
+go install github.com/damirm/clipwipe@latest
+```
+
+The binary will be installed to `$GOPATH/bin` (or `$HOME/go/bin` by default).
+
+### From source
+
 ```bash
 go build -o clipwipe
 ```
@@ -20,16 +30,16 @@ go build -o clipwipe
 
 ```bash
 # Run with defaults (500ms interval, UTM parameters)
-./clipwipe
+clipwipe
 
 # Custom interval
-./clipwipe -interval 100ms
+clipwipe -interval 100ms
 
 # Custom parameters to remove
-./clipwipe -params "utm_source,utm_medium,ref"
+clipwipe -params "utm_source,utm_medium,ref"
 
 # Debug mode
-./clipwipe -debug -interval 100ms
+clipwipe -debug -interval 100ms
 ```
 
 ## Flags
@@ -44,13 +54,13 @@ go build -o clipwipe
 
 ```bash
 # Remove only utm_source and utm_medium
-./clipwipe -params "utm_source,utm_medium"
+clipwipe -params "utm_source,utm_medium"
 
 # Remove tracking parameters (default)
-./clipwipe
+clipwipe
 
 # Fast polling for responsive cleaning
-./clipwipe -interval 50ms
+clipwipe -interval 50ms
 ```
 
 ## How it works
