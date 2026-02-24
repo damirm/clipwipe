@@ -17,6 +17,7 @@ var defaultParams = []string{
 	"utm_campaign",
 	"utm_content",
 	"utm_term",
+	"utm_referrer",
 	"fbclid",
 	"gclid",
 }
